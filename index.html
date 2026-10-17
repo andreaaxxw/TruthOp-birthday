@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d2b">
+  <meta name="description" content="A special birthday surprise for TruthOP!">
+  <title>Happy Birthday TruthOP! 🎂</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #f9a8d4;
+      --gold: #fde68a;
+      --purple: #c4b5fd;
+      --dark: #100d2b;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: radial-gradient(
+        ellipse at top, #34205d, var(--dark) 75%
+      );
+      color: white;
+      font-family: system-ui, Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 145px;
+    }
+
+    .tag {
+      color: var(--pink);
+      letter-spacing: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 18px 0;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      line-height: 1.1;
+      background: linear-gradient(
+        90deg, var(--pink), var(--gold), var(--purple)
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: glow 2s infinite alternate;
+    }
+
+    .subtitle {
+      color: #e9d5ff;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .cake {
+      font-size: clamp(85px, 16vw, 135px);
+      animation: bounce 1.5s infinite;
+      filter: drop-shadow(0 0 22px #f9a8d455);
+      margin: 12px 0 24px;
+    }
+
+    button {
+      font: inherit;
+      font-weight: bold;
+      font-size: 16px;
+      color: #24103e;
+      background: linear-gradient(135deg, var(--gold), var(--pink));
+      border: none;
+      border-radius: 50px;
+      padding: 15px 27px;
+      cursor: pointer;
+      box-shadow: 0 6px 28px #f9a8d444;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 35px #f9a8d477;
+    }
+
+    button:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 5px;
+    }
+
+    .hint {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--purple);
+    }
+
+    /* Floating cat gallery */
+    .cat-gallery {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cat-gallery img {
+      position: absolute;
+      width: clamp(65px, 9vw, 115px);
+      height: clamp(80px, 12vw, 145px);
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      border-radius: 18px;
+      box-shadow: 0 0 22px #c084fc66;
+      animation: catFloat 3s ease-in-out infinite alternate;
+    }
+
+    .cat-gallery img:nth-child(1) {
+      left: 18px;
+      top: 7%;
+      transform: rotate(-8deg);
+    }
+
+    .cat-gallery img:nth-child(2) {
+      right: 18px;
+      top: 7%;
+      animation-delay: .4s;
+    }
+
+    .cat-gallery img:nth-child(3) {
+      left: 18px;
+      top: 39%;
+      animation-delay: .8s;
+    }
+
+    .cat-gallery img:nth-child(4) {
+      right: 18px;
+      top: 39%;
+      animation-delay: 1.2s;
+    }
+
+    .cat-gallery img:nth-child(5) {
+      left: 18px;
+      bottom: 5%;
+      animation-delay: 1.6s;
+    }
+
+    .cat-gallery img:nth-child(6) {
+      right: 18px;
+      bottom: 5%;
+      animation-delay: 2s;
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      z-index: 1;
+      font-size: 42px;
+      pointer-events: none;
+      animation: floatUp linear infinite;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      z-index: 30;
+      width: 9px;
+      height: 13px;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    /* Birthday popup */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: #08051bef;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      overflow-y: auto;
+    }
+
+    .overlay.show {
+      display: flex;
+      animation: fadeIn .35s ease;
+    }
+
+    .popup {
+      width: min(100%, 460px);
+      max-height: 90dvh;
+      overflow-y: auto;
+      background: linear-gradient(145deg, #38215c, #17102f);
+      border: 1px solid #c4b5fd66;
+      border-radius: 26px;
+      padding: 30px 22px;
+      box-shadow: 0 0 60px #c084fc33;
+      animation: popIn .4s ease;
+    }
+
+    .popup .cake {
+      font-size: 75px;
+      margin: 0 0 12px;
+    }
+
+    .popup h2 {
+      font-size: clamp(2rem, 8vw, 3rem);
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .popup p {
+      color: #f3e8ff;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .popup .signature {
+      color: var(--pink);
+      font-weight: bold;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 5px #c084fc44); }
+      to { filter: drop-shadow(0 0 18px #f9a8d477); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0); }
+      to { transform: translateY(-125vh) rotate(25deg); }
+    }
+
+    @keyframes catFloat {
+      from { translate: 0 0; }
+      to { translate: 0 10px; }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 58px;
+      }
+
+      .tag {
+        letter-spacing: 2px;
+        font-size: 10px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .cat-gallery img {
+        width: 43px;
+        height: 58px;
+        border-width: 2px;
+        border-radius: 9px;
+      }
+
+      .cat-gallery img:nth-child(odd) {
+        left: 5px;
+      }
+
+      .cat-gallery img:nth-child(even) {
+        right: 5px;
+      }
+
+      .popup {
+        padding: 24px 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Six floating cat photos -->
+  <div class="cat-gallery" aria-label="Cute cats">
+    <img src="https://cataas.com/cat?width=240&amp;height=300"
+         alt="Cute cat 1">
+    <img src="https://cataas.com/cat/cute?width=240&amp;height=300"
+         alt="Cute cat 2">
+    <img src="https://cataas.com/cat?width=240&amp;height=300"
+         alt="Cute cat 3">
+    <img src="https://cataas.com/cat/cute?width=240&amp;height=300"
+         alt="Cute cat 4">
+    <img src="https://cataas.com/cat?width=240&amp;height=300"
+         alt="Cute cat 5">
+    <img src="https://cataas.com/cat/cute?width=240&amp;height=300"
+         alt="Cute cat 6">
+  </div>
+
+  <main class="container">
+    <div class="tag">✨ A SPECIAL DAY ✨</div>
+
+    <h1>Happy Birthday<br>TruthOP!</h1>
+
+    <p class="subtitle">
+      Today is all about YOU! 💖<br>
+      May your life shine brighter than the stars
+      and your dreams turn into reality.
+    </p>
+
+    <div class="cake" aria-hidden="true">🎂</div>
+
+    <button id="surpriseButton" type="button">
+      🎁 Open Your Surprise
+    </button>
+
+    <p class="hint">Made with ❤️ specially for TruthOP</p>
+  </main>
+
+  <!-- Birthday surprise popup -->
+  <div class="overlay" id="birthdayPopup"
+       role="dialog" aria-modal="true"
+       aria-labelledby="popupTitle"
+       aria-hidden="true">
+
+    <div class="popup">
+      <div class="cake" aria-hidden="true">🎂</div>
+
+      <h2 id="popupTitle">Happy Birthday!</h2>
+
+      <p>
+        Dear <strong>TruthOP</strong>! 🥳<br><br>
+        🎈 May your days be filled with joy.<br>
+        🎁 May your dreams come true.<br>
+        💖 May you always have reasons to smile.<br><br>
+        Keep shining, keep smiling, and make
+        every moment unforgettable!<br><br>
+        Lots of love and best wishes! 🎉
+      </p>
+
+      <p class="signature">You deserve all the happiness! 💗</p>
+
+      <button id="closeButton" type="button">
+        💖 Thank You!
+      </button>
+    </div>
+  </div>
+
+  <script>
+    "use strict";
+
+    const popup = document.getElementById("birthdayPopup");
+    const surpriseButton = document.getElementById("surpriseButton");
+    const closeButton = document.getElementById("closeButton");
+
+    let confettiTimer = null;
+    let popupPreviouslyFocused = null;
+
+    // Create floating balloons
+    function createBalloons() {
+      const balloonEmojis = ["🎈", "🎈", "💜", "💖"];
+
+      for (let i = 0; i < 12; i++) {
+        const balloon = document.createElement("div");
+
+        balloon.className = "balloon";
+        balloon.textContent =
+          balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+
+        balloon.style.left = Math.random() * 95 + "vw";
+        balloon.style.animationDuration = (8 + Math.random() * 9) + "s";
+        balloon.style.animationDelay = (-Math.random() * 15) + "s";
+
+        document.body.appendChild(balloon);
+      }
+    }
+
+    // Launch colorful confetti
+    function launchConfetti() {
+      const colors = [
+        "#fde68a", "#f9a8d4", "#c4b5fd",
+        "#86efac", "#67e8f9", "#fb7185"
+      ];
+
+      for (let i = 0; i < 100; i++) {
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration = (2 + Math.random() * 3) + "s";
+        piece.style.animationDelay = Math.random() * 0.8 + "s";
+        piece.style.borderRadius =
+          Math.random() > 0.5 ? "50%" : "2px";
+
+        document.body.appendChild(piece);
+
+        piece.addEventListener("animationend", () => piece.remove());
+      }
+    }
+
+    // Open the surprise
+    function openSurprise() {
+      if (popup.classList.contains("show")) return;
+
+      popupPreviouslyFocused = document.activeElement;
+
+      popup.classList.add("show");
+      popup.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      closeButton.focus();
+      launchConfetti();
+
+      if (confettiTimer !== null) {
+        clearInterval(confettiTimer);
+      }
+
+      confettiTimer = setInterval(launchConfetti, 3500);
+    }
+
+    // Close the surprise
+    function closeSurprise() {
+      popup.classList.remove("show");
+      popup.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+
+      if (confettiTimer !== null) {
+        clearInterval(confettiTimer);
+        confettiTimer = null;
+      }
+
+      document.querySelectorAll(".confetti").forEach(piece => piece.remove());
+
+      if (popupPreviouslyFocused &&
+          typeof popupPreviouslyFocused.focus === "function") {
+        popupPreviouslyFocused.focus();
+      } else {
+        surpriseButton.focus();
+      }
+    }
+
+    surpriseButton.addEventListener("click", openSurprise);
+    closeButton.addEventListener("click", closeSurprise);
+
+    // Close by clicking the dark background
+    popup.addEventListener("click", event => {
+      if (event.target === popup) {
+        closeSurprise();
+      }
+    });
+
+    // Close by pressing Escape
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && popup.classList.contains("show")) {
+        closeSurprise();
+      }
+    });
+
+    // Start the birthday animations
+    createBalloons();
+  </script>
+
+</body>
+</html>
